@@ -1,6 +1,6 @@
 import 'package:device_id/device_id.dart';
 import 'package:flutter/material.dart';
-import 'package:nltour_collaborator/controller/traveler_controller.dart';
+import 'package:nltour_collaborator/controller/collaborator_controller.dart';
 import 'package:nltour_collaborator/model/otp.dart';
 import 'package:nltour_collaborator/supporter/validator.dart';
 import 'package:nltour_collaborator/ui/widget/nl_button.dart';

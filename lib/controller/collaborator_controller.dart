@@ -1,12 +1,12 @@
-import 'package:http/http.dart' as http;
-import 'package:nltour_collaborator/model/otp.dart';
 import 'dart:convert';
 
-import 'package:nltour_collaborator/model/traveler.dart';
+import 'package:http/http.dart' as http;
+import 'package:nltour_collaborator/model/collaborator.dart';
+import 'package:nltour_collaborator/model/otp.dart';
 import 'package:nltour_collaborator/network/host.dart';
 
 class CollaboratorController {
-  Future<Traveler> login(Traveler traveler) async {
+  Future<Collaborator> login(Collaborator collaborator) async {
     final client = http.Client();
     final headers = {
       'Content-type': 'application/json',
@@ -14,51 +14,54 @@ class CollaboratorController {
     };
     return await client
         .post(Hosting.collaboratorLogin,
-            body: json.encode(traveler), headers: headers)
+        body: json.encode(collaborator), headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
       } else {
-        return Traveler.fromJson(json.decode(response.body));
+        return Collaborator.fromJson(json.decode(response.body));
       }
     });
   }
 
-  Future<Traveler> create(Traveler traveler) async {
+  //TODO if there is no register for collaborator, delete this method
+  Future<Collaborator> create(Collaborator collaborator) async {
     final client = http.Client();
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
     return await client
-        .post(Hosting.collaborator, body: json.encode(traveler), headers: headers)
+        .post(
+        Hosting.collaborator, body: json.encode(collaborator), headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
       } else {
-        return Traveler.fromJson(json.decode(response.body));
+        return Collaborator.fromJson(json.decode(response.body));
       }
     });
   }
 
-  Future<Traveler> update(Traveler traveler) async {
+  Future<Collaborator> update(Collaborator collaborator) async {
     final client = http.Client();
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
     return await client
-        .put(Hosting.collaboratorUpdateInfo, body: json.encode(traveler), headers: headers)
+        .put(Hosting.collaboratorUpdateInfo, body: json.encode(collaborator),
+        headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
       } else {
-        return Traveler.fromJson(json.decode(response.body));
+        return Collaborator.fromJson(json.decode(response.body));
       }
     });
   }
 
-  Future<Traveler> getTraveler(String email) async {
+  Future<Collaborator> getCollaborator(String email) async {
     final client = http.Client();
     final headers = {
       'Content-type': 'application/json',
@@ -71,7 +74,7 @@ class CollaboratorController {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
       } else {
-        return Traveler.fromJson(json.decode(response.body));
+        return Collaborator.fromJson(json.decode(response.body));
       }
     });
   }
@@ -110,8 +113,8 @@ class CollaboratorController {
     });
   }
 
-  Future<Traveler> changePassword(
-      String email, String newPassword, String identifier) async {
+  Future<Collaborator> changePassword(String email, String newPassword,
+      String identifier) async {
     final client = http.Client();
     final headers = {
       'Content-type': 'application/json',
@@ -127,12 +130,13 @@ class CollaboratorController {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
       } else {
-        return Traveler.fromJson(json.decode(response.body));
+        return Collaborator.fromJson(json.decode(response.body));
       }
     });
   }
 
-  Future<Traveler> findByEmail(String email) async {
+  //TODO continue here
+  Future<Collaborator> findByEmail(String email) async {
     final client = http.Client();
     final headers = {
       'Content-type': 'application/json',
@@ -146,7 +150,7 @@ class CollaboratorController {
         print(response.statusCode);
         return null;
       } else {
-        return Traveler.fromJson(json.decode(response.body));
+        return Collaborator.fromJson(json.decode(response.body));
       }
     });
   }
