@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:nltour_collaborator/controller/place_controller.dart';
+import 'package:nltour_collaborator/controller/tour_controller.dart';
+import 'package:nltour_collaborator/model/place.dart';
+import 'package:nltour_collaborator/model/tour.dart';
+import 'package:nltour_collaborator/ui/widget/nl_big_card.dart';
 
-class HomeContainer extends StatelessWidget {
+class HomeContainer extends StatefulWidget {
+  @override
+  HomeContainerState createState() {
+    return new HomeContainerState();
+  }
+}
+
+class HomeContainerState extends State<HomeContainer> {
+
+  TextEditingController _tourController = TextEditingController();
+  List<Tour> _tours = List<Tour>();
+  Tour _tour = Tour();
+
   @override
   Widget build(BuildContext context) {
-    final _searchByDCT = Container(
+    final _search = Container(
       margin: const EdgeInsets.only(bottom: 1.0),
       padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 5.0),
       decoration: BoxDecoration(
@@ -15,38 +33,74 @@ class HomeContainer extends StatelessWidget {
           )),
       child: Container(
         margin: EdgeInsets.only(right: 3.0),
-        child: TextField(
-//            onChanged: ,
-          style: TextStyle(
-            color: Color(0xff008fe5),
-            fontSize: 14.0,
-            fontFamily: 'Semilight',
-          ),
-          decoration: const InputDecoration(
-            hintText: 'Place..',
-            hintStyle: TextStyle(
-              color: Color(0x80008fe5),
-            ),
-            icon: Icon(
-              Icons.search,
+        child: TypeAheadField(
+          textFieldConfiguration: TextFieldConfiguration(
+            style: TextStyle(
               color: Color(0xff008fe5),
+              fontSize: 14.0,
+              fontFamily: 'Semilight',
             ),
-            border: InputBorder.none,
+            decoration: const InputDecoration(
+              hintText: 'Place..',
+              hintStyle: TextStyle(
+                color: Color(0x80008fe5),
+              ),
+              icon: Icon(
+                Icons.search,
+                color: Color(0xff008fe5),
+              ),
+              border: InputBorder.none,
+            ),
+            controller: _tourController,
           ),
+          suggestionsCallback: (pattern) async {
+            var tourController = TourController();
+            _tours = await tourController.findByName(pattern);
+            var suggestion = List<String>();
+            for (Place p in _data) {
+              suggestion.add(p.name);
+            }
+            return suggestion;
+          },
+          itemBuilder: (context, suggestion) {
+            return ListTile(
+              title: Text(suggestion),
+            );
+          },
+          transitionBuilder: (context, suggestionsBox, controller) {
+            return suggestionsBox;
+          },
+          onSuggestionSelected: (suggestion) {
+            _placeController.text = suggestion;
+            for (Place p in _data) {
+              if (p.name == suggestion) {
+                _place = p;
+              }
+            }
+          },
         ),
+//        child: TextField(
+//          style: TextStyle(
+//            color: Color(0xff008fe5),
+//            fontSize: 14.0,
+//            fontFamily: 'Semilight',
+//          ),
+//          decoration: const InputDecoration(
+//            hintText: 'Place..',
+//            hintStyle: TextStyle(
+//              color: Color(0x80008fe5),
+//            ),
+//            icon: Icon(
+//              Icons.search,
+//              color: Color(0xff008fe5),
+//            ),
+//            border: InputBorder.none,
+//          ),
+//        ),
       ),
     );
 
-    final card = BigCard(
-      address: 'Ben Thanh Market',
-      startDate: '9:00 AM January 2019',
-      nameTraveler: 'Bruce Lee',
-      national: 'US',
-      language: 'English',
-      descOfTraveler: 'I would like to travel Ben Thanh Market. '
-          'If you have time, go to visit Ben Thanh night market, which is hold in outside area and opens from 6.00pm. '
-          'It includes about 200 stalls and contributes to create the unique highlight for picturesque life in Ho Chi Minh City.',
-    );
+    final card = BigCard();
 
     final _listCard = Container(
       height: MediaQuery.of(context).size.height - 158.0,
@@ -69,7 +123,7 @@ class HomeContainer extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            _searchByDCT,
+            _search,
             _listCard,
           ],
         ),

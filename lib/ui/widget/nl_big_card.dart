@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nltour_collaborator/model/tour.dart';
 import 'package:nltour_collaborator/ui/widget/nl_dialog.dart';
 
-class BigCard extends StatelessWidget {
+class BigCard extends StatefulWidget {
   final Tour tour;
 
-  const BigCard({
-    Key key,
-    this.tour,
-  }) : super(key: key);
+  const BigCard({Key key, this.tour}) : super(key: key);
+
+  @override
+  BigCardState createState() {
+    return new BigCardState();
+  }
+}
+
+class BigCardState extends State<BigCard> {
+  DateFormat d = DateFormat("MMM dd, yyyy");
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     Dialogs dialogs = Dialogs();
 
     final _confirmWidget = Container(
       child: SizedBox(
-//        height: 300.0,
         child: Card(
           child: Column(
             children: <Widget>[
@@ -27,7 +32,7 @@ class BigCard extends StatelessWidget {
                   color: Color(0xff008fe5),
                 ),
                 title: Text(
-                  address,
+                  widget.tour.place.address.address,
                   style: TextStyle(
                     color: Color(0xff008fe5),
                     fontSize: 14.0,
@@ -35,7 +40,7 @@ class BigCard extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  startDate,
+                  d.format(widget.tour.startDate),
                   style: TextStyle(
                     fontSize: 14.0,
                     fontFamily: 'Light',
@@ -48,7 +53,9 @@ class BigCard extends StatelessWidget {
               ),
               ListTile(
                 title: Text(
-                  nameTraveler,
+                  widget.tour.traveler.firstName +
+                      " " +
+                      widget.tour.traveler.lastName,
                   style: TextStyle(
                     fontFamily: 'Normal',
                     fontSize: 14.0,
@@ -61,7 +68,7 @@ class BigCard extends StatelessWidget {
                       children: <Widget>[
                         Text('National:    '),
                         Text(
-                          national,
+                          widget.tour.traveler.address.country,
                           style: TextStyle(color: Color(0xff333333)),
                         ),
                       ],
@@ -70,7 +77,7 @@ class BigCard extends StatelessWidget {
                       children: <Widget>[
                         Text('Language: '),
                         Text(
-                          language,
+                          widget.tour.traveler.languages.primaryLanguage,
                           style: TextStyle(color: Color(0xff333333)),
                         ),
                       ],
@@ -80,7 +87,7 @@ class BigCard extends StatelessWidget {
               ),
               ListTile(
                 title: Text(
-                  descOfTraveler,
+                  widget.tour.description,
                   style: TextStyle(
                     fontFamily: 'Semilight',
                     fontSize: 12.0,
@@ -100,7 +107,7 @@ class BigCard extends StatelessWidget {
         height: 225.0,
         child: GestureDetector(
           onTap: () {
-            dialogs.confirm(
+            dialogs.confirm2(
                 context, 'Confirm Get Tour', _confirmWidget, 'NO', 'GET TOUR');
           },
           child: Card(
@@ -114,7 +121,7 @@ class BigCard extends StatelessWidget {
                     color: Color(0xff008fe5),
                   ),
                   title: Text(
-                    address,
+                    widget.tour.place.address.address,
                     style: TextStyle(
                       color: Color(0xff008fe5),
                       fontSize: 14.0,
@@ -122,7 +129,7 @@ class BigCard extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    startDate,
+                    d.format(widget.tour.startDate),
                     style: TextStyle(
                       fontSize: 14.0,
                       fontFamily: 'Light',
@@ -135,7 +142,9 @@ class BigCard extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
-                    nameTraveler,
+                    widget.tour.traveler.firstName +
+                        ' ' +
+                        widget.tour.traveler.lastName,
                     style: TextStyle(
                       fontFamily: 'Normal',
                       fontSize: 14.0,
@@ -148,7 +157,7 @@ class BigCard extends StatelessWidget {
                         children: <Widget>[
                           Text('National:    '),
                           Text(
-                            national,
+                            widget.tour.traveler.address.country,
                             style: TextStyle(color: Color(0xff333333)),
                           ),
                         ],
@@ -157,7 +166,7 @@ class BigCard extends StatelessWidget {
                         children: <Widget>[
                           Text('Language: '),
                           Text(
-                            language,
+                            widget.tour.traveler.languages.primaryLanguage,
                             style: TextStyle(color: Color(0xff333333)),
                           ),
                         ],
@@ -167,7 +176,7 @@ class BigCard extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
-                    descOfTraveler,
+                    widget.tour.description,
                     maxLines: 3,
                     style: TextStyle(
                       fontFamily: 'Semilight',

@@ -12,7 +12,7 @@ import 'package:nltour_collaborator/ui/place_page.dart';
 final routes = {
   '/': (BuildContext context) => new LoginPage(),
   '/login': (BuildContext context) => new LoginPage(),
-  '/home': (BuildContext context) => new HomePage(),
+  '/home': (BuildContext context) => new HomeCollaboratorPage(),
   '/forgot': (BuildContext context) => new ForgotPage(),
   '/changepass': (BuildContext context) => new ChangePassPage(),
   '/place': (BuildContext context) => new PlacePage(),
