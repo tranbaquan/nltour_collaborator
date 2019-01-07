@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:nltour_collaborator/controller/traveler_controller.dart';
+import 'package:nltour_collaborator/controller/collaborator_controller.dart';
 import 'package:nltour_collaborator/model/traveler.dart';
 import 'package:nltour_collaborator/supporter/auth.dart';
 import 'package:nltour_collaborator/supporter/validator.dart';

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:intl/intl.dart';
 import 'package:nltour_collaborator/controller/auto_complete_api.dart';
-import 'package:nltour_collaborator/controller/traveler_controller.dart';
+import 'package:nltour_collaborator/controller/collaborator_controller.dart';
 import 'package:nltour_collaborator/model/traveler.dart';
 import 'package:nltour_collaborator/model/type.dart';
 import 'package:nltour_collaborator/supporter/validator.dart';
