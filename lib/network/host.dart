@@ -10,4 +10,6 @@ class Hosting {
   static final String getPlacesByName = host + "place/";
   static final String getOTP = host + "collaborator/otp";
   static final String changePass = host + "collaborator/password/change";
+  static final String changeUserPassword = host +
+      "collaborator/password/changeuserpassword";
 }
