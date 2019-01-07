@@ -17,7 +17,6 @@ class NLTour extends StatelessWidget {
         primaryColorDark: Colors.green,
         fontFamily: 'Semilight'
       ),
-//      home: LoginPage(),
       initialRoute: '/',
       routes: routes,
     );
