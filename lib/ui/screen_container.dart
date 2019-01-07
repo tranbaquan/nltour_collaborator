@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:nltour_collaborator/controller/place_controller.dart';
 import 'package:nltour_collaborator/controller/tour_controller.dart';
-import 'package:nltour_collaborator/model/place.dart';
 import 'package:nltour_collaborator/model/tour.dart';
 import 'package:nltour_collaborator/ui/widget/nl_big_card.dart';
 
@@ -17,11 +15,25 @@ class HomeContainerState extends State<HomeContainer> {
 
   TextEditingController _tourController = TextEditingController();
   List<Tour> _tours = List<Tour>();
-  Tour _tour = Tour();
 
   @override
   Widget build(BuildContext context) {
-    final _search = Container(
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 9.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            buildSearchBar(context),
+            buildBody(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildSearchBar(BuildContext context) {
+    return Container(
       margin: const EdgeInsets.only(bottom: 1.0),
       padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 5.0),
       decoration: BoxDecoration(
@@ -55,10 +67,10 @@ class HomeContainerState extends State<HomeContainer> {
           ),
           suggestionsCallback: (pattern) async {
             var tourController = TourController();
-            _tours = await tourController.findByName(pattern);
+            _tours = await tourController.getAll();
             var suggestion = List<String>();
-            for (Place p in _data) {
-              suggestion.add(p.name);
+            for (Tour t in _tours) {
+              suggestion.add(t.place.name);
             }
             return suggestion;
           },
@@ -71,63 +83,46 @@ class HomeContainerState extends State<HomeContainer> {
             return suggestionsBox;
           },
           onSuggestionSelected: (suggestion) {
-            _placeController.text = suggestion;
-            for (Place p in _data) {
-              if (p.name == suggestion) {
-                _place = p;
-              }
-            }
+            _tourController.text = suggestion;
           },
         ),
-//        child: TextField(
-//          style: TextStyle(
-//            color: Color(0xff008fe5),
-//            fontSize: 14.0,
-//            fontFamily: 'Semilight',
-//          ),
-//          decoration: const InputDecoration(
-//            hintText: 'Place..',
-//            hintStyle: TextStyle(
-//              color: Color(0x80008fe5),
-//            ),
-//            icon: Icon(
-//              Icons.search,
-//              color: Color(0xff008fe5),
-//            ),
-//            border: InputBorder.none,
-//          ),
-//        ),
       ),
     );
+  }
 
-    final card = BigCard();
-
-    final _listCard = Container(
-      height: MediaQuery.of(context).size.height - 158.0,
+  Widget buildBody(BuildContext context){
+    return Container(
       padding: EdgeInsets.fromLTRB(5.0, 15.0, 5.0, 0.0),
-      child: ListView(
-        children: <Widget>[
-          card,
-          card,
-          card,
-          card,
-          card,
-        ],
+      child: FutureBuilder(
+        builder: (context, snapshot) {
+          if(snapshot.hasData) {
+            return ListView(
+              children: snapshot.data,
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+        future: buildCardTours(),
       ),
     );
+  }
 
-    // TODO: implement build
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 9.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            _search,
-            _listCard,
-          ],
-        ),
-      ),
-    );
+  Future<List<Widget>> buildCardTours() async {
+    var res = List<Widget>();
+    if(_tours.length != 0) {
+      for (Tour t in _tours) {
+        final card = BigCard(tour: t,);
+        res.add(card);
+      }
+      return res;
+    }
+    var tourController = TourController();
+    List<Tour> tours = await tourController.getAll();
+    for (Tour t in tours) {
+      final card = BigCard(tour: t,);
+      res.add(card);
+    }
+    return res;
   }
 }

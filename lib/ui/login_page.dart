@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:nltour_collaborator/controller/collaborator_controller.dart';
-import 'package:nltour_collaborator/model/traveler.dart';
+import 'package:nltour_collaborator/model/collaborator.dart';
 import 'package:nltour_collaborator/supporter/auth.dart';
 import 'package:nltour_collaborator/supporter/validator.dart';
 import 'package:nltour_collaborator/ui/widget/nl_button.dart';
@@ -46,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              buildBackGround(context),
+              buildBackground(context),
               buildLoginForm(context)
             ],
           ),
@@ -55,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget buildBackGround(BuildContext context) {
+  Widget buildBackground(BuildContext context) {
     return Container(
       child: Stack(
         alignment: AlignmentDirectional(0, 2),
@@ -168,11 +166,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _login() async {
-    final Traveler traveler =
-        Traveler(email: _email.text, password: _password.text);
-    print(json.encode(traveler));
+    final Collaborator collaborator =
+    Collaborator(email: _email.text, password: _password.text);
     var controller = CollaboratorController();
-    controller.login(traveler).then((data) {
+    controller.login(collaborator).then((data) {
       Navigator.of(context).pop();
       if (data != null) {
         _saveUser(data);
@@ -183,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _saveUser(Traveler data) async {
+  void _saveUser(Collaborator data) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('logged', true);
     prefs.setString('email', data.email);
