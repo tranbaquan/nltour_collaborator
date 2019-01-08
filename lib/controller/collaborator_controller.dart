@@ -24,7 +24,6 @@ class CollaboratorController {
     });
   }
 
-
   Future<Collaborator> update(Collaborator collaborator) async {
     final client = http.Client();
     final headers = {
