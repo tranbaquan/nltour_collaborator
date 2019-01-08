@@ -11,12 +11,16 @@ class TourController {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
-    return await client.get(Hosting.getAllTours, headers: headers).then((response) {
+    return await client
+        .get(Hosting.getAllTours, headers: headers)
+        .then((response) {
       if (response.statusCode < 200 && response.statusCode >= 400) {
         return null;
       } else {
         List list = json.decode(response.body) as List;
-        return list.map((m) => Tour.fromJson(json.decode(json.encode(m)))).toList();
+        return list
+            .map((m) => Tour.fromJson(json.decode(json.encode(m))))
+            .toList();
       }
     });
   }
@@ -32,7 +36,9 @@ class TourController {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
-    return await client.post(Hosting.tour, headers: headers, body: json.encode(tour)).then((response) {
+    return await client
+        .post(Hosting.tour, headers: headers, body: json.encode(tour))
+        .then((response) {
       if (response.statusCode < 200 && response.statusCode >= 400) {
         return null;
       } else {
@@ -46,14 +52,18 @@ class TourController {
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'email' : email,
+      'email': email,
     };
-    return await client.get(Hosting.getMyTours, headers: headers).then((response) {
+    return await client
+        .get(Hosting.getMyTours, headers: headers)
+        .then((response) {
       if (response.statusCode < 200 && response.statusCode >= 400) {
         return null;
       } else {
         List list = json.decode(response.body) as List;
-        return list.map((m) => Tour.fromJson(json.decode(json.encode(m)))).toList();
+        return list
+            .map((m) => Tour.fromJson(json.decode(json.encode(m))))
+            .toList();
       }
     });
   }
