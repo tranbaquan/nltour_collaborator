@@ -32,8 +32,8 @@ class CollaboratorController {
       'Accept': 'application/json',
     };
     return await client
-        .put(Hosting.collaboratorUpdateInfo, body: json.encode(collaborator),
-        headers: headers)
+        .put(Hosting.collaboratorUpdateInfo,
+        body: json.encode(collaborator), headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
@@ -117,7 +117,6 @@ class CollaboratorController {
     });
   }
 
-  //TODO continue here
   Future<Collaborator> findByEmail(String email) async {
     final client = http.Client();
     final headers = {
