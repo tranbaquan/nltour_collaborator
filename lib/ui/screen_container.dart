@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:nltour_collaborator/controller/tour_controller.dart';
@@ -19,14 +21,16 @@ class HomeContainerState extends State<HomeContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 9.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            buildSearchBar(context),
-            buildBody(context),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 9.0, horizontal: 9.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              buildSearchBar(context),
+              buildBody(context),
+            ],
+          ),
         ),
       ),
     );
@@ -92,6 +96,7 @@ class HomeContainerState extends State<HomeContainer> {
 
   Widget buildBody(BuildContext context){
     return Container(
+      height: MediaQuery.of(context).size.height,
       padding: EdgeInsets.fromLTRB(5.0, 15.0, 5.0, 0.0),
       child: FutureBuilder(
         builder: (context, snapshot) {
@@ -110,6 +115,7 @@ class HomeContainerState extends State<HomeContainer> {
 
   Future<List<Widget>> buildCardTours() async {
     var res = List<Widget>();
+
     if(_tours.length != 0) {
       for (Tour t in _tours) {
         final card = BigCard(tour: t,);
@@ -117,8 +123,10 @@ class HomeContainerState extends State<HomeContainer> {
       }
       return res;
     }
+
     var tourController = TourController();
     List<Tour> tours = await tourController.getAll();
+    print(json.encode(tours));
     for (Tour t in tours) {
       final card = BigCard(tour: t,);
       res.add(card);

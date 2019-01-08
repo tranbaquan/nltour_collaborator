@@ -66,12 +66,10 @@ class NLHistory extends StatelessWidget {
                     style: TextStyle(fontFamily: 'Normal'),
                   ),
                   Text(
-                    "Guide: " +
-                        (tour.tourGuide == null
-                            ? "Finding tour guide"
-                            : tour.traveler.lastName +
-                                " " +
-                                tour.traveler.firstName),
+                    "Customer: " +
+                        tour.traveler.lastName +
+                        " " +
+                        tour.traveler.firstName,
                     style: TextStyle(
                       fontSize: 12,
                       fontFamily: 'Semilight',
@@ -138,8 +136,8 @@ class NLHistory extends StatelessWidget {
   }
 
   String getStatus() {
-    if (tour.tourGuide == null) {
-      return "Waiting";
+    if (!tour.isAccepted) {
+      return "Pending";
     } else if (tour.startDate.isAfter(DateTime.now())) {
       return "Accepted";
     } else {
@@ -273,5 +271,3 @@ class NLCardPlaceExpand extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nltour_collaborator/ui/screen_container.dart';
+import 'package:nltour_collaborator/ui/widget/nl_app_bar.dart';
 import 'package:nltour_collaborator/ui/widget/nl_menu_card.dart';
 
 class HomeCollaboratorPage extends StatefulWidget {
@@ -33,20 +34,7 @@ class HomeCollaboratorPageState extends State<HomeCollaboratorPage>
         child: NLMenuCard(),
       ),
       backgroundColor: Color(0x00ffffffff),
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Color(0x00ff008fe5)),
-        backgroundColor: Color(0x00ffffffff),
-        elevation: 1.0,
-        centerTitle: true,
-        title: Text(
-          'NLTour Collaborator',
-          style: TextStyle(
-            color: Color(0xff008fe5),
-            fontFamily: 'Normal',
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      appBar: NLAppbar.buildAppBar(context, 'NLTour'),
       body: Container(child: mainScreen),
     );
   }

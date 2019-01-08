@@ -373,7 +373,7 @@ class Choice {
 
 const List<Choice> choices = const <Choice>[
   const Choice(title: 'Home'),
-  const Choice(title: 'Update information'),
+  const Choice(title: 'Information'),
   const Choice(title: 'Pending tour'),
   const Choice(title: 'View history'),
   const Choice(title: 'Privacy Policy | Term of Use'),

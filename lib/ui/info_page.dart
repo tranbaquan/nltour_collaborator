@@ -37,7 +37,6 @@ class InformationPageState extends State<InformationPage> {
   final dateFormat = DateFormat('MMM dd, yyyy');
   final autoComplete = CountryAutoComplete();
 
-
   Future<Collaborator> loadData() async {
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email');
@@ -83,11 +82,17 @@ class InformationPageState extends State<InformationPage> {
   Future<Collaborator> updateUser() async {
     var controller = CollaboratorController();
     final prefs = await SharedPreferences.getInstance();
-    account.languages.primaryLanguage = _languages.text.isEmpty ? account.languages.primaryLanguage : _languages.text.isEmpty;
-    account.address.country = _country.text.isEmpty ? account.address.country : _country.text;
-    account.personalID = _personalId.text.isEmpty ? account.personalID : _personalId.text;
-    account.firstName = _firstName.text.isEmpty ? account.firstName : _firstName.text;
-    account.lastName = _lastName.text.isEmpty ? account.lastName : _lastName.text;
+    account.languages.primaryLanguage = _languages.text.isEmpty
+        ? account.languages.primaryLanguage
+        : _languages.text.isEmpty;
+    account.address.country =
+        _country.text.isEmpty ? account.address.country : _country.text;
+    account.personalID =
+        _personalId.text.isEmpty ? account.personalID : _personalId.text;
+    account.firstName =
+        _firstName.text.isEmpty ? account.firstName : _firstName.text;
+    account.lastName =
+        _lastName.text.isEmpty ? account.lastName : _lastName.text;
 
     return controller.update(account).then((data) {
       print(json.encode(data));
@@ -109,35 +114,35 @@ class InformationPageState extends State<InformationPage> {
     final _editableButton = Container(
       child: isEnable
           ? SimpleRoundButton(
-        textColor: Color(0xffffffff),
-        btnText: 'SAVE',
-        backgroundColor: Color(0xff008fe5),
-        roundColor: Color(0xff008fe5),
-        btnHeight: 30,
-        btnWidth: 80,
-        onPressed: () {
-          NLDialog.showLoading(context);
-          updateUser().then((data) {
-            Navigator.of(context).pop();
-            setState(() {
-              isEnable = !isEnable;
-            });
-          });
-        },
-      )
+              textColor: Color(0xffffffff),
+              btnText: 'SAVE',
+              backgroundColor: Color(0xff008fe5),
+              roundColor: Color(0xff008fe5),
+              btnHeight: 30,
+              btnWidth: 80,
+              onPressed: () {
+                NLDialog.showLoading(context);
+                updateUser().then((data) {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    isEnable = !isEnable;
+                  });
+                });
+              },
+            )
           : SimpleRoundButton(
-        textColor: Color(0xff006fb2),
-        btnText: 'EDIT',
-        backgroundColor: Color(0xffffffff),
-        roundColor: Color(0xff008fe5),
-        btnHeight: 30,
-        btnWidth: 80,
-        onPressed: () {
-          setState(() {
-            isEnable = !isEnable;
-          });
-        },
-      ),
+              textColor: Color(0xff006fb2),
+              btnText: 'EDIT',
+              backgroundColor: Color(0xffffffff),
+              roundColor: Color(0xff008fe5),
+              btnHeight: 30,
+              btnWidth: 80,
+              onPressed: () {
+                setState(() {
+                  isEnable = !isEnable;
+                });
+              },
+            ),
     );
 
     final _cancelButton = Container(
@@ -171,7 +176,7 @@ class InformationPageState extends State<InformationPage> {
       controller: _reenterPassword,
       decoration: InputDecoration(labelText: 'Retype Password'),
       validator: (value) =>
-      value != _password.text ? "Password not match!" : null,
+          value != _password.text ? "Password not match!" : null,
     );
 
     final _confirmWidget = Container(
@@ -196,20 +201,6 @@ class InformationPageState extends State<InformationPage> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF008fe5), Color(0xFF3eb43e)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey[500],
-                      offset: Offset(0.0, 1.5),
-                      blurRadius: 1.5,
-                    ),
-                  ],
-                ),
                 padding: EdgeInsets.only(top: 30),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -225,13 +216,10 @@ class InformationPageState extends State<InformationPage> {
                       ),
                     ),
                     Text(
-                      snapshot.data.firstName +
-                          " " +
-                          snapshot.data.lastName,
+                      snapshot.data.firstName + " " + snapshot.data.lastName,
                       style: TextStyle(
                         fontFamily: 'Normal',
                         fontSize: 20,
-                        color: Colors.white,
                       ),
                     ),
                     Text(
@@ -243,14 +231,21 @@ class InformationPageState extends State<InformationPage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 18),
+                      margin: EdgeInsets.only(top: 20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Expanded(
-                            child: Container(),
+                            child: Text(
+                              'General Information',
+                              style: TextStyle(
+                                  color: Color(0xff707070),
+                                  fontSize: 16,
+                                  fontFamily: 'Semilight'),
+                            ),
                           ),
                           _editableButton,
                           isEnable ? _cancelButton : Container(),
@@ -262,32 +257,19 @@ class InformationPageState extends State<InformationPage> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(top: 10),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 18),
-                      child: Text(
-                        'General Information',
-                        style: TextStyle(
-                            color: Color(0xff707070),
-                            fontSize: 16,
-                            fontFamily: 'Semilight'),
-                      ),
-                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       color: Color(0xffffffff),
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width:
-                            MediaQuery.of(context).size.width / 3,
+                            width: MediaQuery.of(context).size.width / 3,
                             child: Text(
                               'First name',
                               style: TextStyle(
@@ -322,14 +304,13 @@ class InformationPageState extends State<InformationPage> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       color: Color(0xffffffff),
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width:
-                            MediaQuery.of(context).size.width / 3,
+                            width: MediaQuery.of(context).size.width / 3,
                             child: Text(
                               'Last name',
                               style: TextStyle(
@@ -365,13 +346,12 @@ class InformationPageState extends State<InformationPage> {
                     Container(
                       color: Color(0xffffffff),
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width:
-                            MediaQuery.of(context).size.width / 3,
+                            width: MediaQuery.of(context).size.width / 3,
                             child: Text(
                               'Phone',
                               style: TextStyle(
@@ -406,13 +386,12 @@ class InformationPageState extends State<InformationPage> {
                     Container(
                       color: Color(0xffffffff),
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width:
-                            MediaQuery.of(context).size.width / 3,
+                            width: MediaQuery.of(context).size.width / 3,
                             child: Text(
                               'Gender',
                               style: TextStyle(
@@ -423,18 +402,25 @@ class InformationPageState extends State<InformationPage> {
                           ),
                           Expanded(
                             child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 InkWell(
                                   child: RadioItemButton(
-                                    RadioModel(account.gender == Gender.MALE ? true : false, 'men'),
+                                    RadioModel(
+                                        account.gender == Gender.MALE
+                                            ? true
+                                            : false,
+                                        'men'),
                                   ),
                                   splashColor: Color(0xff008fe5),
                                 ),
                                 InkWell(
                                   child: RadioItemButton(
-                                    RadioModel(account.gender == Gender.FEMALE ? true : false, 'women'),
+                                    RadioModel(
+                                        account.gender == Gender.FEMALE
+                                            ? true
+                                            : false,
+                                        'women'),
                                   ),
                                   splashColor: Color(0xff008fe5),
                                 ),
@@ -447,13 +433,12 @@ class InformationPageState extends State<InformationPage> {
                     Container(
                       color: Color(0xffffffff),
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width:
-                            MediaQuery.of(context).size.width / 3,
+                            width: MediaQuery.of(context).size.width / 3,
                             child: Text(
                               'Birthday',
                               style: TextStyle(
@@ -488,13 +473,12 @@ class InformationPageState extends State<InformationPage> {
                     Container(
                       color: Color(0xffffffff),
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width:
-                            MediaQuery.of(context).size.width / 3,
+                            width: MediaQuery.of(context).size.width / 3,
                             child: Text(
                               'Personal ID',
                               style: TextStyle(
@@ -530,13 +514,12 @@ class InformationPageState extends State<InformationPage> {
                     Container(
                       color: Color(0xffffffff),
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width:
-                            MediaQuery.of(context).size.width / 3,
+                            width: MediaQuery.of(context).size.width / 3,
                             child: Text(
                               'Country',
                               style: TextStyle(
@@ -548,8 +531,7 @@ class InformationPageState extends State<InformationPage> {
                           Expanded(
                             child: Container(
                               child: TypeAheadField(
-                                textFieldConfiguration:
-                                TextFieldConfiguration(
+                                textFieldConfiguration: TextFieldConfiguration(
                                   enabled: isEnable,
                                   style: TextStyle(
                                     color: Color(0xff008fe5),
@@ -574,8 +556,8 @@ class InformationPageState extends State<InformationPage> {
                                     title: Text(suggestion),
                                   );
                                 },
-                                transitionBuilder: (context,
-                                    suggestionsBox, controller) {
+                                transitionBuilder:
+                                    (context, suggestionsBox, controller) {
                                   return suggestionsBox;
                                 },
                                 onSuggestionSelected: (suggestion) {
@@ -590,13 +572,12 @@ class InformationPageState extends State<InformationPage> {
                     Container(
                       color: Color(0xffffffff),
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       child: Row(
                         children: <Widget>[
                           Container(
-                            width:
-                            MediaQuery.of(context).size.width / 3,
+                            width: MediaQuery.of(context).size.width / 3,
                             child: Text(
                               'Main languages',
                               style: TextStyle(
@@ -608,8 +589,7 @@ class InformationPageState extends State<InformationPage> {
                           Expanded(
                             child: Container(
                               child: TypeAheadField(
-                                textFieldConfiguration:
-                                TextFieldConfiguration(
+                                textFieldConfiguration: TextFieldConfiguration(
                                   enabled: isEnable,
                                   style: TextStyle(
                                     color: Color(0xff008fe5),
@@ -617,8 +597,7 @@ class InformationPageState extends State<InformationPage> {
                                     fontFamily: 'Semilight',
                                   ),
                                   decoration: InputDecoration(
-                                    hintText: account
-                                        .languages.primaryLanguage,
+                                    hintText: account.languages.primaryLanguage,
                                     hintStyle: TextStyle(
                                       color: Color(0xff000000),
                                     ),
@@ -635,8 +614,8 @@ class InformationPageState extends State<InformationPage> {
                                     title: Text(suggestion),
                                   );
                                 },
-                                transitionBuilder: (context,
-                                    suggestionsBox, controller) {
+                                transitionBuilder:
+                                    (context, suggestionsBox, controller) {
                                   return suggestionsBox;
                                 },
                                 onSuggestionSelected: (suggestion) {
@@ -674,8 +653,8 @@ class InformationPageState extends State<InformationPage> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       color: Color(0xffffffff),
                       child: Row(
                         children: <Widget>[
@@ -717,8 +696,8 @@ class InformationPageState extends State<InformationPage> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 18, vertical: 0),
                       color: Color(0xffffffff),
                       child: Row(
                         children: <Widget>[
