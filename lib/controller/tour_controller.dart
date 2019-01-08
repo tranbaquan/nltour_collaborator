@@ -50,6 +50,11 @@ class TourController {
     });
   }
 
+  //TODO get waiting tours
+  //TODO get waiting tours find by place
+  //TODO get my waiting tours
+  //TODO get my pending tours
+
   Future<Tour> createTour(Tour tour) async {
     final client = http.Client();
     final headers = {
