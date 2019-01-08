@@ -14,7 +14,6 @@ class HomeContainer extends StatefulWidget {
 }
 
 class HomeContainerState extends State<HomeContainer> {
-
   TextEditingController _tourController = TextEditingController();
   List<Tour> _tours = List<Tour>();
 
@@ -94,13 +93,13 @@ class HomeContainerState extends State<HomeContainer> {
     );
   }
 
-  Widget buildBody(BuildContext context){
+  Widget buildBody(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height - 150,
       padding: EdgeInsets.fromLTRB(5.0, 15.0, 5.0, 0.0),
       child: FutureBuilder(
         builder: (context, snapshot) {
-          if(snapshot.hasData) {
+          if (snapshot.hasData) {
             return ListView(
               children: snapshot.data,
             );
@@ -116,19 +115,23 @@ class HomeContainerState extends State<HomeContainer> {
   Future<List<Widget>> buildCardTours() async {
     var res = List<Widget>();
 
-    if(_tours.length != 0) {
+    if (_tours.length != 0) {
       for (Tour t in _tours) {
-        final card = BigCard(tour: t,);
+        final card = BigCard(
+          tour: t,
+        );
         res.add(card);
       }
       return res;
     }
 
     var tourController = TourController();
-    List<Tour> tours = await tourController.getAll();
+    List<Tour> tours = await tourController.getWaitingTours();
     print(json.encode(tours));
     for (Tour t in tours) {
-      final card = BigCard(tour: t,);
+      final card = BigCard(
+        tour: t,
+      );
       res.add(card);
     }
     return res;

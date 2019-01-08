@@ -34,6 +34,7 @@ class InformationPageState extends State<InformationPage> {
   final _personalId = TextEditingController();
   final _country = TextEditingController();
   final _languages = TextEditingController();
+  final _dob = TextEditingController();
   final dateFormat = DateFormat('MMM dd, yyyy');
   final autoComplete = CountryAutoComplete();
 
@@ -44,6 +45,14 @@ class InformationPageState extends State<InformationPage> {
     return collaboratorController.findByEmail(email).then((data) {
       if (data != null) {
         account = data;
+        _password.text = account.password;
+        _reenterPassword.text = account.password;
+        _firstName.text = account.firstName;
+        _lastName.text = account.lastName;
+        _personalId.text = account.personalID;
+        _country.text = account.address.country;
+        _languages.text = account.languages.primaryLanguage;
+        _dob.text = dateFormat.format(account.dob);
         return account;
       } else {
         return null;
@@ -51,17 +60,20 @@ class InformationPageState extends State<InformationPage> {
     });
   }
 
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: account.dob,
-        firstDate: DateTime(1970),
-        lastDate: DateTime(2020));
-    if (picked != null && picked != account.dob) {
-      setState(() {
-        account.dob = picked;
-      });
-    }
+  _selectDate(BuildContext context) {
+    showDatePicker(
+      context: context,
+      initialDate: account.dob,
+      firstDate: DateTime(1970),
+      lastDate: DateTime(2020),
+    ).then((data) {
+      if (data != null) {
+        setState(() {
+          account.dob = data;
+          _dob.text = dateFormat.format(account.dob);
+        });
+      }
+    });
   }
 
   @override
@@ -84,7 +96,7 @@ class InformationPageState extends State<InformationPage> {
     final prefs = await SharedPreferences.getInstance();
     account.languages.primaryLanguage = _languages.text.isEmpty
         ? account.languages.primaryLanguage
-        : _languages.text.isEmpty;
+        : _languages.text;
     account.address.country =
         _country.text.isEmpty ? account.address.country : _country.text;
     account.personalID =
@@ -283,17 +295,13 @@ class InformationPageState extends State<InformationPage> {
                               child: TextFormField(
                                 enabled: isEnable,
                                 style: TextStyle(
-                                  color: Color(0xff008fe5),
+                                  color: Colors.black87,
                                   fontSize: 14.0,
                                   fontFamily: 'Semilight',
                                 ),
                                 controller: _firstName,
                                 validator: Validator.notEmpty,
                                 decoration: InputDecoration(
-                                  hintText: account.firstName,
-                                  hintStyle: TextStyle(
-                                    color: Color(0xff000000),
-                                  ),
                                   border: InputBorder.none,
                                 ),
                               ),
@@ -324,17 +332,13 @@ class InformationPageState extends State<InformationPage> {
                               child: TextFormField(
                                 enabled: isEnable,
                                 style: TextStyle(
-                                  color: Color(0xff008fe5),
+                                  color: Colors.black87,
                                   fontSize: 14.0,
                                   fontFamily: 'Semilight',
                                 ),
                                 validator: Validator.notEmpty,
                                 controller: _lastName,
                                 decoration: InputDecoration(
-                                  hintText: account.lastName,
-                                  hintStyle: TextStyle(
-                                    color: Color(0xff000000),
-                                  ),
                                   border: InputBorder.none,
                                 ),
                               ),
@@ -453,15 +457,12 @@ class InformationPageState extends State<InformationPage> {
                                 onTap: () => _selectDate(context),
                                 enabled: isEnable,
                                 style: TextStyle(
-                                  color: Color(0xff008fe5),
+                                  color: Colors.black87,
                                   fontSize: 14.0,
                                   fontFamily: 'Semilight',
                                 ),
+                                controller: _dob,
                                 decoration: InputDecoration(
-                                  hintText: dateFormat.format(account.dob),
-                                  hintStyle: TextStyle(
-                                    color: Color(0xff000000),
-                                  ),
                                   border: InputBorder.none,
                                 ),
                               ),
@@ -493,16 +494,12 @@ class InformationPageState extends State<InformationPage> {
                                 enabled: isEnable,
                                 validator: Validator.notEmpty,
                                 style: TextStyle(
-                                  color: Color(0xff008fe5),
+                                  color: Colors.black87,
                                   fontSize: 14.0,
                                   fontFamily: 'Semilight',
                                 ),
                                 controller: _personalId,
                                 decoration: InputDecoration(
-                                  hintText: account.personalID,
-                                  hintStyle: TextStyle(
-                                    color: Color(0xff000000),
-                                  ),
                                   border: InputBorder.none,
                                 ),
                               ),
@@ -534,15 +531,11 @@ class InformationPageState extends State<InformationPage> {
                                 textFieldConfiguration: TextFieldConfiguration(
                                   enabled: isEnable,
                                   style: TextStyle(
-                                    color: Color(0xff008fe5),
+                                    color: Colors.black87,
                                     fontSize: 14.0,
                                     fontFamily: 'Semilight',
                                   ),
                                   decoration: InputDecoration(
-                                    hintText: account.address.country,
-                                    hintStyle: TextStyle(
-                                      color: Color(0xff000000),
-                                    ),
                                     border: InputBorder.none,
                                   ),
                                   controller: _country,
@@ -592,15 +585,11 @@ class InformationPageState extends State<InformationPage> {
                                 textFieldConfiguration: TextFieldConfiguration(
                                   enabled: isEnable,
                                   style: TextStyle(
-                                    color: Color(0xff008fe5),
+                                    color: Colors.black87,
                                     fontSize: 14.0,
                                     fontFamily: 'Semilight',
                                   ),
                                   decoration: InputDecoration(
-                                    hintText: account.languages.primaryLanguage,
-                                    hintStyle: TextStyle(
-                                      color: Color(0xff000000),
-                                    ),
                                     border: InputBorder.none,
                                   ),
                                   controller: _languages,

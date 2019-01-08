@@ -222,7 +222,7 @@ class _NLMenuCardState extends State<NLMenuCard> {
                 Container(
                   child: GestureDetector(
                     child: Text(
-                      'Home',
+                      choices[0].title,
                       style: TextStyle(
                         color: Color(0x00ff444444),
                         fontFamily: 'Semilight',
@@ -242,7 +242,7 @@ class _NLMenuCardState extends State<NLMenuCard> {
                 Container(
                   child: GestureDetector(
                     child: Text(
-                      'Update information',
+                      choices[1].title,
                       style: TextStyle(
                         color: Color(0x00ff444444),
                         fontFamily: 'Semilight',
@@ -265,7 +265,7 @@ class _NLMenuCardState extends State<NLMenuCard> {
                       Expanded(
                         child: GestureDetector(
                           child: Text(
-                            'Payment',
+                            choices[2].title,
                             style: TextStyle(
                               color: Color(0x00ff444444),
                               fontFamily: 'Semilight',
@@ -303,7 +303,7 @@ class _NLMenuCardState extends State<NLMenuCard> {
                 Container(
                   child: GestureDetector(
                     child: Text(
-                      'View history',
+                      choices[3].title,
                       style: TextStyle(
                         color: Color(0x00ff444444),
                         fontFamily: 'Semilight',
@@ -323,7 +323,7 @@ class _NLMenuCardState extends State<NLMenuCard> {
                 Container(
                   child: GestureDetector(
                     child: Text(
-                      'Privacy Policy | Term of Use',
+                      choices[4].title,
                       style: TextStyle(
                         color: Color(0x00ff444444),
                         fontFamily: 'Semilight',
@@ -343,7 +343,7 @@ class _NLMenuCardState extends State<NLMenuCard> {
                 Container(
                   child: GestureDetector(
                     child: Text(
-                      'Sign out',
+                      choices[5].title,
                       style: TextStyle(
                         color: Color(0x00ff444444),
                         fontFamily: 'Semilight',
