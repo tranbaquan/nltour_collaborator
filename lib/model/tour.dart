@@ -15,6 +15,7 @@ class Tour {
   double price;
   bool isAccepted;
   bool paid;
+  String description;
 
   Tour(
       {this.id,
@@ -24,7 +25,8 @@ class Tour {
       this.startDate,
       this.price,
       this.isAccepted,
-      this.paid});
+      this.paid,
+      this.description});
 
   factory Tour.fromJson(Map<String, dynamic> json) => _$TourFromJson(json);
 
