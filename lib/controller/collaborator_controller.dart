@@ -24,24 +24,6 @@ class CollaboratorController {
     });
   }
 
-  //TODO if there is no register for collaborator, delete this method
-  Future<Collaborator> create(Collaborator collaborator) async {
-    final client = http.Client();
-    final headers = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-    };
-    return await client
-        .post(
-        Hosting.collaborator, body: json.encode(collaborator), headers: headers)
-        .then((response) {
-      if (response.statusCode < 200 || response.statusCode >= 400) {
-        return null;
-      } else {
-        return Collaborator.fromJson(json.decode(response.body));
-      }
-    });
-  }
 
   Future<Collaborator> update(Collaborator collaborator) async {
     final client = http.Client();

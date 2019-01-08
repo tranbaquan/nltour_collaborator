@@ -25,7 +25,7 @@ class _NLMenuCardState extends State<NLMenuCard> {
         Navigator.of(context).pushNamed('/info');
       }),
       ChoiceEvent(onTap: (BuildContext context) {
-        Navigator.of(context).pushNamed('/payment');
+        Navigator.of(context).pushNamed('/pending');
       }),
       ChoiceEvent(onTap: (BuildContext context) {
         Navigator.of(context).pushNamed('/history');
@@ -373,8 +373,8 @@ class Choice {
 
 const List<Choice> choices = const <Choice>[
   const Choice(title: 'Home'),
-  const Choice(title: 'Update information'),
-  const Choice(title: 'Payment'),
+  const Choice(title: 'Information'),
+  const Choice(title: 'Pending tour'),
   const Choice(title: 'View history'),
   const Choice(title: 'Privacy Policy | Term of Use'),
   const Choice(title: 'Sign Out'),
