@@ -75,10 +75,14 @@ class _LoginPageState extends State<LoginPage> {
               height: 240,
             ),
           ),
-          Icon(
-            Icons.brightness_1,
-            size: 120,
-            color: Colors.greenAccent,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(60),
+            child: Image.network(
+              'https://firebasestorage.googleapis.com/v0/b/nltour-2018.appspot.com/o/NLGuide.png?alt=media&token=180bd4aa-6922-42fe-8ec6-c409f160eab6',
+              width: 120,
+              height: 120,
+              fit: BoxFit.cover,
+            ),
           )
         ],
       ),

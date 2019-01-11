@@ -2,10 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nltour_collaborator/controller/collaborator_controller.dart';
+import 'package:nltour_collaborator/controller/tour_controller.dart';
 import 'package:nltour_collaborator/model/place.dart';
 import 'package:nltour_collaborator/model/tour.dart';
+import 'package:nltour_collaborator/model/traveler.dart';
+import 'package:nltour_collaborator/ui/mesage_page.dart';
 import 'package:nltour_collaborator/ui/widget/nl_button.dart';
 import 'package:nltour_collaborator/ui/widget/nl_dialog.dart';
+import 'package:nltour_collaborator/utils/dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NLHistory extends StatelessWidget {
   final Tour tour;
@@ -102,29 +108,26 @@ class NLHistory extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      tour.tourGuide != null
-                          ? RaisedOutlineButton(
-                              height: 25,
-                              onPressed: () {},
-                              child: Text(
-                                'Contact Guide',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            )
-                          : RaisedOutlineButton(
-                              height: 25,
-                              onPressed: () {},
-                              child: Text(
-                                'Pay for tour',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
+                      SimpleRoundButton(
+                        btnHeight: 30,
+                        btnWidth: 80,
+                        btnText: 'Message',
+                        onPressed: () {
+                          goToMessage(context, tour.traveler);
+                        },
+                        roundColor: Color(0xFF008fe5),
+                        backgroundColor: Color(0xFF008fe5),
+                        textColor: Colors.white,
+                      ),
+//                      SimpleRoundButton(
+//                        btnHeight: 30,
+//                        btnWidth: 80,
+//                        btnText: 'Cancel',
+//                        onPressed: cancelTour(context),
+//                        roundColor: Color(0xFF008fe5),
+//                        backgroundColor: Colors.white,
+//                        textColor: Color(0xFF008fe5),
+//                      ),
                     ],
                   ),
                 ],
@@ -139,13 +142,30 @@ class NLHistory extends StatelessWidget {
 
   String getStatus() {
     print(json.encode(tour));
-    if (!tour.isAccepted) {
+    if (tour.tourGuide == null) {
       return "Pending";
     } else if (tour.startDate.isAfter(DateTime.now())) {
       return "Accepted";
     } else {
       return "Completed";
     }
+  }
+
+  Future goToMessage(BuildContext context, Traveler traveler) async {
+    final prefs = await SharedPreferences.getInstance();
+    String myEmail = prefs.getString('email');
+    CollaboratorController controller = CollaboratorController();
+    controller.findByEmail(myEmail).then((data) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                MessagePage(
+                  traveler: traveler,
+                  collaborator: data,
+                )),
+      );
+    });
   }
 }
 

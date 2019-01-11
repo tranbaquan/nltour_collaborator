@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NLAppbar {
-  static AppBar buildAppBar(BuildContext context, String name) {
+  static AppBar buildAppbar(BuildContext context, String name) {
     final appBar = AppBar(
       iconTheme: IconThemeData(color: Color(0x00ff008fe5)),
       backgroundColor: Color(0x00ffffffff),

@@ -17,7 +17,7 @@ class HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NLAppbar.buildAppBar(context, 'History'),
+      appBar: NLAppbar.buildAppbar(context, 'History'),
       drawer: Drawer(
         child: NLMenuCard(),
       ),
@@ -50,8 +50,9 @@ class HistoryPageState extends State<HistoryPage> {
     var tourController = TourController();
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('email');
-    List<Tour> tours = await tourController.getMyTour(email);
+    List<Tour> tours = await tourController.getPendingTours(email);
     for (Tour tour in tours) {
+      print('ok');
       final card = Container(
           margin: EdgeInsets.only(bottom: 10),
           child: NLHistory(

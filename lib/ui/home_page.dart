@@ -34,7 +34,7 @@ class HomeCollaboratorPageState extends State<HomeCollaboratorPage>
         child: NLMenuCard(),
       ),
       backgroundColor: Color(0x00ffffffff),
-      appBar: NLAppbar.buildAppBar(context, 'NLTour'),
+      appBar: NLAppbar.buildAppbar(context, 'NLTour'),
       body: Container(child: mainScreen),
     );
   }

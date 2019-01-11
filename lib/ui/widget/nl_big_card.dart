@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nltour_collaborator/controller/tour_controller.dart';
 import 'package:nltour_collaborator/model/tour.dart';
 import 'package:nltour_collaborator/ui/widget/nl_button.dart';
 import 'package:nltour_collaborator/ui/widget/nl_dialog.dart';
+import 'package:nltour_collaborator/utils/dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BigCard extends StatefulWidget {
   final Tour tour;
@@ -113,20 +116,24 @@ class BigCardState extends State<BigCard> {
                         SimpleRoundButton(
                           textColor: Colors.white,
                           backgroundColor: Color(0xFF3eb43e),
-                          roundColor:  Color(0xFF3eb43e),
+                          roundColor: Color(0xFF3eb43e),
                           btnWidth: 90,
                           btnHeight: 30,
                           btnText: 'View Info',
-                          onPressed: registerTour(widget.tour),
+                          onPressed: () {
+                            registerTour(widget.tour);
+                          },
                         ),
                         SimpleRoundButton(
                           textColor: Colors.white,
                           backgroundColor: Color(0xFF008fe5),
-                          roundColor:  Color(0xFF008fe5),
+                          roundColor: Color(0xFF008fe5),
                           btnWidth: 90,
                           btnHeight: 30,
                           btnText: 'Register',
-                          onPressed: registerTour(widget.tour),
+                          onPressed: () {
+                            registerTour(widget.tour);
+                          },
                         )
                       ],
                     ),
@@ -140,7 +147,19 @@ class BigCardState extends State<BigCard> {
     );
   }
 
-  registerTour(Tour tour) {
+  registerTour(Tour tour) async {
+    NLDialog.showLoading(context);
+    TourController controller = TourController();
+    final prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString('email');
+    bool data = await controller.registerTour(tour.id, email);
+    Navigator.of(context).pop();
+    if (data) {
+      NLDialog.showInfo(context, 'Register Successed',
+          'Please check your tour in pending tours');
+    } else {
+      NLDialog.showInfo(context, 'Register Failed', 'Oops... sorry!');
+    }
 
   }
 }
@@ -157,7 +176,8 @@ class HistoryTourCard extends StatelessWidget {
     this.time,
     this.isPaid,
     this.actionText,
-  })  : assert(address != null),
+  })
+      : assert(address != null),
         assert(time != null),
         assert(isPaid != null),
         super(key: key);
@@ -200,21 +220,21 @@ class HistoryTourCard extends StatelessWidget {
               ),
               trailing: isPaid
                   ? Text(
-                      'See detail...',
-                      style: TextStyle(
-                        color: Color(0xff898989),
-                        fontFamily: 'Semilight',
-                        fontSize: 11,
-                      ),
-                    )
+                'See detail...',
+                style: TextStyle(
+                  color: Color(0xff898989),
+                  fontFamily: 'Semilight',
+                  fontSize: 11,
+                ),
+              )
                   : Text(
-                      'Pay Now',
-                      style: TextStyle(
-                        color: Color(0xff008fe5),
-                        fontFamily: 'Normal',
-                        fontSize: 14,
-                      ),
-                    ),
+                'Pay Now',
+                style: TextStyle(
+                  color: Color(0xff008fe5),
+                  fontFamily: 'Normal',
+                  fontSize: 14,
+                ),
+              ),
             ),
           ),
         ),

@@ -1,6 +1,6 @@
 class Hosting {
 //  static final String host = "http://10.20.17.119:8080/";
-  static final String host = "http://10.20.13.134:8080/";
+  static final String host = "http://192.168.43.136:8080/";
   static final String collaboratorLogin = host + "collaborator/login";
   static final String collaborator = host + "collaborator";
   static final String collaboratorUpdateInfo =
