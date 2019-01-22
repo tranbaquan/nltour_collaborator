@@ -169,7 +169,7 @@ class SimpleButton extends StatelessWidget {
 }
 
 // simple round button
-class SimpleRoundButton extends StatelessWidget {
+class NLSimpleRoundedButton extends StatelessWidget {
   final Color backgroundColor;
   final Color roundColor;
   final String btnText;
@@ -178,7 +178,7 @@ class SimpleRoundButton extends StatelessWidget {
   final double btnWidth;
   final Function onPressed;
 
-  SimpleRoundButton({
+  NLSimpleRoundedButton({
     this.backgroundColor,
     this.roundColor,
     this.btnText,

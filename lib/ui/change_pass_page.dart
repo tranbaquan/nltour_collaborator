@@ -1,6 +1,7 @@
 import 'package:device_id/device_id.dart';
 import 'package:flutter/material.dart';
 import 'package:nltour_collaborator/controller/collaborator_controller.dart';
+import 'package:nltour_collaborator/supporter/database/database.dart';
 import 'package:nltour_collaborator/supporter/validator.dart';
 import 'package:nltour_collaborator/ui/widget/nl_app_bar.dart';
 import 'package:nltour_collaborator/ui/widget/nl_button.dart';
@@ -85,8 +86,9 @@ class ChangePassPageState extends State<ChangePassPage> {
     var controller = CollaboratorController();
     var deviceInfo = await DeviceId.getID;
     final prefs = await SharedPreferences.getInstance();
+
     String email = prefs.get('email');
-    controller.changePassword(email, _pass.text, deviceInfo).then((data) {
+    controller.changePassword(email, _pass.text, deviceInfo).then((data) async {
       if (data == null) {
         Navigator.of(context).pop();
         NLDialog.showInfo(context, "Change Password Failed", "Please check your network");
@@ -95,6 +97,8 @@ class ChangePassPageState extends State<ChangePassPage> {
         prefs.setString('avatar', data.avatar);
         prefs.setString('firstName', data.firstName);
         prefs.setString('lastName', data.lastName);
+        await DatabaseProvider.db.deleteAll();
+        await DatabaseProvider.db.addTraveler(data);
         Navigator.of(context).pushReplacementNamed('/home');
       }
     });

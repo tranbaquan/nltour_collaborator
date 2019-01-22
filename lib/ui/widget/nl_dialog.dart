@@ -48,7 +48,7 @@ class Dialogs {
               textColor: Color(0xff008fe5),
               onPress: () => _confirmResult(false, context),
             ),
-            SimpleRoundButton(
+            NLSimpleRoundedButton(
               btnText: 'GET TOUR',
               btnWidth: 85.0,
               btnHeight: 35.0,
@@ -80,7 +80,7 @@ class Dialogs {
               textColor: Color(0xff008fe5),
               onPress: () => _confirmResult(false, context),
             ),
-            SimpleRoundButton(
+            NLSimpleRoundedButton(
               btnText: txtAGREE,
               btnWidth: 85.0,
               btnHeight: 35.0,

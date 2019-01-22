@@ -3,6 +3,8 @@ import 'package:nltour_collaborator/model/place.dart';
 import 'package:nltour_collaborator/network/host.dart';
 import 'dart:convert';
 
+import 'package:nltour_collaborator/network/place_url.dart';
+
 class PlaceController {
   Future<List<Place>> getAll() async {
     final client = http.Client();
@@ -10,7 +12,7 @@ class PlaceController {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
-    return await client.get(Hosting.getAllPlaces, headers: headers).then((response) {
+    return await client.get(PlaceUrl.crud, headers: headers).then((response) {
       if (response.statusCode < 200 && response.statusCode >= 400) {
         return null;
       } else {
@@ -26,7 +28,7 @@ class PlaceController {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
-    return await client.get(Hosting.getPlacesByName + name, headers: headers).then((response) {
+    return await client.get(PlaceUrl.crud + name, headers: headers).then((response) {
       if (response.statusCode < 200 && response.statusCode >= 400) {
         return null;
       } else {

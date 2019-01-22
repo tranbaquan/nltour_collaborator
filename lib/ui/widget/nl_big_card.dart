@@ -113,7 +113,7 @@ class BigCardState extends State<BigCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
-                        SimpleRoundButton(
+                        NLSimpleRoundedButton(
                           textColor: Colors.white,
                           backgroundColor: Color(0xFF3eb43e),
                           roundColor: Color(0xFF3eb43e),
@@ -121,10 +121,9 @@ class BigCardState extends State<BigCard> {
                           btnHeight: 30,
                           btnText: 'View Info',
                           onPressed: () {
-                            registerTour(widget.tour);
                           },
                         ),
-                        SimpleRoundButton(
+                        NLSimpleRoundedButton(
                           textColor: Colors.white,
                           backgroundColor: Color(0xFF008fe5),
                           roundColor: Color(0xFF008fe5),

@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:nltour_collaborator/controller/common.dart';
 import 'package:nltour_collaborator/model/tour.dart';
-import 'package:nltour_collaborator/network/host.dart';
+import 'package:nltour_collaborator/network/tour_url.dart';
 
 class TourController {
   Future<List<Tour>> getAll() async {
@@ -12,7 +13,7 @@ class TourController {
       'Accept': 'application/json',
     };
     return await client
-        .get(Hosting.getAllTours, headers: headers)
+        .get(TourUrl.crud, headers: headers)
         .then((response) {
       if (response.statusCode < 200 && response.statusCode >= 400) {
         return null;
@@ -25,23 +26,6 @@ class TourController {
     });
   }
 
-  Future<Tour> acceptTour(String id, String email) async {
-    final client = http.Client();
-    final headers = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'id': id,
-      'email': email,
-    };
-
-    return await client.put(Hosting.tour, headers: headers).then((response) {
-      if (response.statusCode < 200 && response.statusCode >= 400) {
-        return null;
-      } else {
-        return Tour.fromJson(json.decode(response.body));
-      }
-    });
-  }
 
   Future<bool> registerTour(String tourId, String collaboratorEmail) async {
     final client = http.Client();
@@ -49,10 +33,10 @@ class TourController {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       'tourId': tourId,
-      'collaboratorEmail': collaboratorEmail,
+      'email': collaboratorEmail,
     };
     return await client
-        .post(Hosting.registerTour, headers: headers)
+        .post(TourUrl.collaboratorTour, headers: headers)
         .then((response) {
       if (response.statusCode < 200 && response.statusCode >= 400) {
         return false;
@@ -69,7 +53,7 @@ class TourController {
       'Accept': 'application/json',
     };
     return await client
-        .get(Hosting.getWaitingTours, headers: headers)
+        .get(TourUrl.waiting, headers: headers)
         .then((response) {
       if (response.statusCode < 200 && response.statusCode >= 400) {
         return null;
@@ -83,7 +67,6 @@ class TourController {
     });
   }
 
-  //TODO get my pending tours (Not tested yet)
   Future<List<Tour>> getPendingTours(String email) async {
     final client = http.Client();
     final headers = {
@@ -92,7 +75,7 @@ class TourController {
       'email': email,
     };
     return await client
-        .get(Hosting.host + "tour/mytours/pending", headers: headers)
+        .get(TourUrl.collaboratorPending, headers: headers)
         .then((response) {
       print(response.statusCode);
       if (response.statusCode < 200 || response.statusCode >= 400) {
@@ -113,7 +96,7 @@ class TourController {
       'Accept': 'application/json',
     };
     return await client
-        .post(Hosting.tour, headers: headers, body: json.encode(tour))
+        .post(TourUrl.crud, headers: headers, body: json.encode(tour))
         .then((response) {
       if (response.statusCode < 200 && response.statusCode >= 400) {
         return null;
@@ -131,7 +114,7 @@ class TourController {
       'email': email,
     };
     return await client
-        .get(Hosting.getMyTours, headers: headers)
+        .get(TourUrl.collaboratorTour, headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
@@ -142,5 +125,16 @@ class TourController {
             .toList();
       }
     });
+  }
+
+  Future cancelRegisterTour(Tour tour) async {
+    final client = http.Client();
+    final headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'tourId': tour.id,
+      'email': tour.tourGuide.email,
+    };
+    return await client.delete(TourUrl.registering, headers: headers);
   }
 }

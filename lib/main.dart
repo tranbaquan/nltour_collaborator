@@ -9,6 +9,7 @@ class NLTour extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'NLTour Collaborator',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textSelectionColor: Color(0xFF008fe5),
         cursorColor: Color(0xFF008fe5),

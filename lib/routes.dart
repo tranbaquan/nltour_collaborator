@@ -6,6 +6,7 @@ import 'package:nltour_collaborator/ui/home_page.dart';
 import 'package:nltour_collaborator/ui/info_page.dart';
 import 'package:nltour_collaborator/ui/login_page.dart';
 import 'package:nltour_collaborator/ui/mesage_page.dart';
+import 'package:nltour_collaborator/ui/message_list_page.dart';
 
 final routes = {
   '/': (BuildContext context) => new LoginPage(),
@@ -16,4 +17,5 @@ final routes = {
   '/history': (BuildContext context) => new HistoryPage(),
   '/info': (BuildContext context) => new InformationPage(),
   '/message': (BuildContext context) => new MessagePage(),
+  '/message_list': (BuildContext context) => new MessageListPage(),
 };

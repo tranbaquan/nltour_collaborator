@@ -125,7 +125,7 @@ class InformationPageState extends State<InformationPage> {
   Widget buildContent(BuildContext context) {
     final _editableButton = Container(
       child: isEnable
-          ? SimpleRoundButton(
+          ? NLSimpleRoundedButton(
               textColor: Color(0xffffffff),
               btnText: 'SAVE',
               backgroundColor: Color(0xff008fe5),
@@ -142,7 +142,7 @@ class InformationPageState extends State<InformationPage> {
                 });
               },
             )
-          : SimpleRoundButton(
+          : NLSimpleRoundedButton(
               textColor: Color(0xff006fb2),
               btnText: 'EDIT',
               backgroundColor: Color(0xffffffff),
@@ -159,7 +159,7 @@ class InformationPageState extends State<InformationPage> {
 
     final _cancelButton = Container(
       margin: EdgeInsets.only(left: 5),
-      child: SimpleRoundButton(
+      child: NLSimpleRoundedButton(
         textColor: Color(0xff006fb2),
         btnText: 'CANCEL',
         backgroundColor: Color(0xffffffff),

@@ -84,13 +84,6 @@ class NLHistory extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Price: " + tour.price.toString(),
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: 'Semilight',
-                    ),
-                  ),
-                  Text(
                     "Date: " + dateFormat.format(tour.startDate),
                     style: TextStyle(
                       fontSize: 12,
@@ -108,7 +101,7 @@ class NLHistory extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      SimpleRoundButton(
+                      NLSimpleRoundedButton(
                         btnHeight: 30,
                         btnWidth: 80,
                         btnText: 'Message',

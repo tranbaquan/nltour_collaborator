@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nltour_collaborator/controller/collaborator_controller.dart';
 import 'package:nltour_collaborator/model/collaborator.dart';
 import 'package:nltour_collaborator/supporter/auth.dart';
+import 'package:nltour_collaborator/supporter/database/database.dart';
 import 'package:nltour_collaborator/supporter/validator.dart';
 import 'package:nltour_collaborator/ui/widget/nl_button.dart';
 import 'package:nltour_collaborator/ui/widget/nl_form.dart';
@@ -191,5 +192,7 @@ class _LoginPageState extends State<LoginPage> {
     prefs.setString('avatar', data.avatar);
     prefs.setString('firstName', data.firstName);
     prefs.setString('lastName', data.lastName);
+    await DatabaseProvider.db.deleteAll();
+    await DatabaseProvider.db.addTraveler(data);
   }
 }

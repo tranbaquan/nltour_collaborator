@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:nltour_collaborator/model/collaborator.dart';
 import 'package:nltour_collaborator/model/otp.dart';
+import 'package:nltour_collaborator/network/collaborator_url.dart';
 import 'package:nltour_collaborator/network/host.dart';
 
 class CollaboratorController {
@@ -13,7 +14,7 @@ class CollaboratorController {
       'Accept': 'application/json',
     };
     return await client
-        .post(Hosting.collaboratorLogin,
+        .post(CollaboratorUrl.login,
         body: json.encode(collaborator), headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
@@ -31,7 +32,7 @@ class CollaboratorController {
       'Accept': 'application/json',
     };
     return await client
-        .put(Hosting.collaboratorUpdateInfo,
+        .put(CollaboratorUrl.crud,
         body: json.encode(collaborator), headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
@@ -50,7 +51,7 @@ class CollaboratorController {
       'email': email,
     };
     return await client
-        .get(Hosting.collaborator, headers: headers)
+        .get(CollaboratorUrl, headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
@@ -68,7 +69,7 @@ class CollaboratorController {
       'email': email,
       'requestType': requestType,
     };
-    return client.get(Hosting.getOTP, headers: headers).then((response) {
+    return client.get(CollaboratorUrl.otp, headers: headers).then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
       } else {
@@ -84,7 +85,7 @@ class CollaboratorController {
       'Accept': 'application/json',
     };
     return await client
-        .post(Hosting.getOTP, body: json.encode(otp), headers: headers)
+        .post(CollaboratorUrl.otp, body: json.encode(otp), headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return false;
@@ -106,7 +107,7 @@ class CollaboratorController {
     };
 
     return await client
-        .put(Hosting.changePass, headers: headers)
+        .put(CollaboratorUrl.otp, headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         return null;
@@ -124,7 +125,7 @@ class CollaboratorController {
     };
 
     return await client
-        .get(Hosting.collaborator, headers: headers)
+        .get(CollaboratorUrl.crud, headers: headers)
         .then((response) {
       if (response.statusCode < 200 || response.statusCode >= 400) {
         print(response.statusCode);
